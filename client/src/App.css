@@ -1,0 +1,26 @@
+/* @media only screen and (max-width:1200px){
+    .navbar{
+        left: 50%;
+      position: absolute;
+      float: right;
+    }
+    
+  }
+  @media only screen and (max-width:1023px){
+    .navbar{
+   
+      justify-content: flex-end;
+    }
+    
+  }
+  @media only screen and (max-width:767px){
+  
+  }
+  @media only screen and (max-width:480px){
+  
+  } */
+
+  /* .navbar-light .navbar-brand {
+    color: rgba(0,0,0,.9);
+    margin-right: 290px;
+} */

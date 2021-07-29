@@ -1,0 +1,40 @@
+@media only screen and (max-width: 959px) {
+  .makeStyles-drawerPaper-7 {
+    margin-top: -65px !important;
+    height: 350px !important;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .makeStyles-drawerPaper-7 {
+    margin-top: -65px !important;
+    height: 320px !important;
+    width: 180px !important;
+  }
+  .makeStyles-appBar-2 {
+    background-color: #218c74 !important;
+    margin-left: 10px !important;
+    width: 70% !important;
+    transition: none !important;
+  }
+  .MuiAppBar-positionFixed{
+    left: -1 !important;
+    width: 100% !important;
+    padding-left: 10px !important;
+  }
+  .makeStyles-appBarShift-3{
+margin-right: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 325px) {
+  .makeStyles-drawerPaper-7 {
+    margin-top: -65px !important;
+    height: 290px !important;
+    width: 100px !important;
+  }
+  .MuiList-padding{
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+}

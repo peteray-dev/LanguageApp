@@ -1,0 +1,88 @@
+@media only screen and (min-width: 360px) and (max-width: 374px) {
+  .card {
+    margin-left: 38px;
+  }
+  .heading {
+    padding-top: 65px !important;
+  }
+  .title {
+    margin-top: 12px;
+    font-weight: 700 !important;
+    font-size: 24px !important;
+  }
+}
+
+@media only screen and (min-width: 411px) and (max-width: 415px) {
+  .card {
+    margin-left: 38px;
+  }
+  .heading {
+    padding-top: 65px !important;
+  }
+  .title {
+    margin-top: 12px;
+
+    font-weight: 700 !important;
+    font-size: 28px !important;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 359px) {
+  .card {
+    margin-left: 38px;
+  }
+  .heading {
+    padding-top: 65px !important;
+  }
+  .title {
+    margin-top: 12px;
+
+    font-weight: 700 !important;
+    font-size: 22px !important;
+  }
+}
+
+@media only screen and (min-width: 375px) and (max-width: 380px) {
+  .card {
+    margin-left: 38px;
+  }
+  .heading {
+    padding-top: 65px !important;
+  }
+  .title {
+    margin-top: 12px;
+    font-weight: 700 !important;
+    font-size: 25px !important;
+  }
+}
+
+@media only screen and (min-width: 540px) and (max-width: 560px) {
+  .card {
+    margin-left: 94px;
+    width: 320px !important;
+  }
+  .heading {
+    padding-top: 65px !important;
+  }
+  .title {
+    margin-top: 12px;
+    font-weight: 700 !important;
+    font-size: 29px !important;
+  }
+}
+
+@media only screen and (min-width: 280px) and (max-width: 281px) {
+  .card {
+    margin-left: 27px;
+    width: 200px !important;
+  }
+  .heading {
+    padding-top: 65px !important;
+    font-size: 26px !important;
+  }
+  .title {
+    margin-top: 12px;
+    font-weight: 700 !important;
+    font-size: 21px !important;
+  }
+}

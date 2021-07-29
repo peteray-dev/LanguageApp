@@ -1,0 +1,102 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+#registerMain {
+  background-color: #218c74;
+  padding-bottom: 3rem;
+  /* height: 100vh; */
+  /* background-size: cover;
+    padding: 0px !important;
+    background-size: cover; */
+}
+.registerWhite > h2 {
+  text-transform: uppercase;
+  color: #218c74;
+  font-size: 1.5rem;
+  padding-top: 20px;
+  text-align: center;
+  text-decoration: underline;
+}
+.registerWhite {
+  background-color: white;
+  width: 40%;
+  margin: 120px auto 25px;
+}
+
+.btnSubmit {
+  background-color: #218c74;
+  color: white;
+  padding: 10px;
+  margin: 25px auto 27px;
+  font-size: 1.22rem;
+  font-weight: bold;
+  border: none;
+}
+
+/* .MuiInputBase-input {
+  padding: 10px 0 7px !important;
+} */
+.makeStyles-root-15 {
+  display: block !important;
+  flex-wrap: wrap;
+  /* width: 70% !important; */
+  justify-content: center !important;
+  margin: 0px auto !important;
+}
+.MuiFormControl-root {
+  width: 100% !important;
+}
+.MuiInput-underline:before{
+  left: -15px !important;
+  /* color: #218c74 */
+}
+.MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 1px solid green !important;
+    /* rgba(0, 0, 0, 0.42) */
+}
+@media screen and (max-width: 1200px) {
+  .registerWhite {
+    width: 50%;
+  }
+  .makeStyles-root-15 {
+    display: block !important;
+    flex-wrap: nowrap !important;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .registerWhite {
+    width: 50%;
+  }
+  .makeStyles-root-15 {
+    display: block !important;
+    flex-wrap: nowrap !important;
+    /* width: 100%; */
+  }
+  .MuiFormControl-root {
+    width: 100% !important;
+  }
+}
+@media screen and (max-width: 767px) {
+  .makeStyles-root-15 {
+    display: block !important;
+    flex-wrap: nowrap !important;
+    width: 100%;
+  }
+  .MuiFormControl-root {
+    width: 95% !important;
+  }
+  .registerWhite {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 400px) {
+  .registerWhite h2 {
+    font-size: 1.2rem;
+  }
+  .registerWhite > h2 {
+    font-size: 1.2rem;
+  }
+}

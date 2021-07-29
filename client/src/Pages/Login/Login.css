@@ -1,0 +1,101 @@
+*{
+    
+    padding: 0px;
+    margin: 0px;
+}
+
+
+#loginMain{
+    background-color: #218C74;
+    padding-bottom: 3rem; 
+    /* background-size: cover; */
+    height: 100vh;
+    /* background-size: cover;
+    padding: 0px !important;*/
+     
+}
+.loginWhite > h2{
+    text-transform: uppercase;
+    color: #218C74;
+   font-size: 1.5rem;
+   padding-top: 20px;
+   text-align: center;
+   text-decoration: underline;
+}
+.loginWhite{
+    background-color: white;
+    width: 30%;
+    margin: 200px auto 25px;
+   
+    
+}
+
+.btnSubmit{
+   background-color: #218C74;   
+   color: white;
+   padding: 10px;
+   margin: 25px auto 27px;
+   font-size: 1.22rem;
+   font-weight: bold;
+   border: none;
+}
+
+.MuiInputBase-input{
+    width: 100% !important
+}
+
+.MuiFormControl-root{
+    width: 40%;
+}
+.loginAccount{
+    margin: 0px auto 15px
+}
+@media screen and (max-width: 1200px) {
+    .loginWhite{
+        width: 35%; 
+    }
+    .makeStyles-root-15 {
+        display: block !important;
+        flex-wrap: nowrap !important;
+        width:100%
+    }
+}
+@media screen and (max-width: 1023px) {
+    /* .MuiFormControl-root{
+        width: 45% !important;
+    } */
+    .loginWhite{
+        width: 60%; 
+    }
+    /* .makeStyles-root-15 {
+        display: block !important;
+        flex-wrap: nowrap !important;
+        width:100%
+    } */
+}
+@media screen and (max-width: 767px) {
+
+.makeStyles-root-15 {
+    display: block !important;
+    flex-wrap: nowrap !important;
+    width:100%
+}
+.MuiFormControl-root{
+    width: 95% !important;
+}
+.loginWhite{
+    width: 70%;    
+}
+
+}
+@media screen and (max-width: 400px) {
+    .loginWhite h2{
+       font-size: 1.2rem;
+    }
+    .loginWhite > h2{
+       font-size: 1.2rem;
+    }
+    .loginWhite{
+        width: 80%;        
+    }
+}

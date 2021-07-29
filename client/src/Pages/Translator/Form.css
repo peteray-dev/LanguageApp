@@ -1,0 +1,50 @@
+.textarea.form-control {
+  width: 555px !important;
+  height: 374px !important;
+}
+.right form textarea {
+  height: 374px !important;
+  padding: 6px 12px !important;
+}
+.inputWithIcon {
+  position: relative;
+}
+.inputWithIcon span a {
+  position: absolute;
+  left: 10px !important;
+  top: -45px !important;
+  padding-top: -100px !important;
+  margin-top: -10px !important;
+}
+.iconx {
+  margin-right: 50px;
+  font-size: x-large;
+}
+
+@media only screen and (max-width: 767px) {
+  .inputWithIcon span a {
+    position: absolute;
+    left: 6px !important;
+    top: -45px !important;
+    padding-top: -100px !important;
+    margin-top: -10px !important;
+  }
+  #pencil{
+      margin-left: -20px;
+  }
+}
+
+
+@media only screen and (max-width: 290px) {
+    .inputWithIcon span a {
+      position: absolute;
+      left: 2px !important;
+      top: -105px !important;
+      padding-top: -200px !important;
+      margin-top: -10px !important;
+    }
+   
+    #pencil{
+        margin-left: 1px !important;   
+    }
+  }

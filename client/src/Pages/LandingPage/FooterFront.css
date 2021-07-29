@@ -1,0 +1,23 @@
+.Row{
+    padding: 30px 0px; 
+}
+
+.social-media{
+    list-style-type: none;
+    display: inline;
+    padding: 20px, 0px
+}
+.social-media-list{
+    margin: 20px 0px
+}
+.center-box h4, .center-box p{
+    color: white;
+    margin: 20px 0px
+}
+.footerNav li {
+    padding-bottom: 30px
+}
+
+.footerNav li a:hover{
+    color: #e6f9f5
+}
