@@ -1,7 +1,8 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
-import { GET_ERRORS, SET_CURRENT_USER } from './types';
+import { BehaviorSubject } from 'rxjs';
+import { GET_CURRENT_USER, GET_ERRORS, SET_CURRENT_USER } from './types';
 
 //Register User
 export const registerUser = (userData, history) => (dispatch) => {
@@ -23,7 +24,7 @@ export const loginUser = (userData) => (dispatch) => {
     .then((res) => {
       //save to localStorage
       const { token } = res.data;
-      // console.log(res.data);
+      console.log(res);
 
       localStorage.setItem(
         'user',
@@ -37,11 +38,11 @@ export const loginUser = (userData) => (dispatch) => {
       setAuthToken(token);
 
       // //decode token to get user data
-      const decoded = jwt_decode(token);
+      // const decoded = jwt_decode(token);
 
       // console.log(decoded);
       // //set current user
-      dispatch(setCurrentUser(decoded));
+      dispatch(setCurrentUser({ ...res.data.message, token }));
     })
     .catch((err) =>
       dispatch({
@@ -51,21 +52,32 @@ export const loginUser = (userData) => (dispatch) => {
     );
 };
 
-//set logged in user
-export const setCurrentUser = (decoded) => {
-  return {
-    type: SET_CURRENT_USER,
-    payload: decoded,
-  };
-};
+export const currentUserSubject = new BehaviorSubject(
+  JSON.parse(localStorage.getItem('user'))
+);
+
+// export const setCurrentUser = (decoded) => {
+//   return {
+//     type: SET_CURRENT_USER,
+//     payload: currentUserSubject.asObservable(),
+//   };
+// };
 
 export const logoutUser = () => (dispatch) => {
   //remove token from the localstorage
-  localStorage.removeItem('jwtToken');
+  localStorage.removeItem('user');
+  currentUserSubject.next(null);
 
   //remove auth header
   setAuthToken(false);
 
   //set current user to empty object
-  dispatch(setCurrentUser({}));
+  dispatch({});
 };
+
+export function currentUserValue() {
+  dispatch({
+    type: GET_CURRENT_USER,
+    payload: currentUserSubject.value,
+  });
+}

@@ -21,11 +21,10 @@ import * as Yup from 'yup';
 // import {required} from 'yup'
 // import { useForm } from 'react-hook-form';
 // import { yupResolver } from '@hookform/resolvers/yup';
-import {registerUser} from "../../Actions/authActions"
+import { registerUser } from '../../Actions/authActions';
 import PropTypes from 'prop-types';
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -33,8 +32,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Form, Formik, Field } from 'formik';
-
-
 
 const CssTextField = withStyles({
   root: {
@@ -116,10 +113,8 @@ const theme = createMuiTheme({
 });
 
 //regular expression
-const phoneRegExp = /^[0]\d{10}$/
+const phoneRegExp = /^[0]\d{10}$/;
 // const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
-
 
 const schema = Yup.object().shape({
   firstname: Yup.string().required('First name is required'),
@@ -138,7 +133,10 @@ const schema = Yup.object().shape({
     .min(4, 'Too short')
     .max(12)
     .required('Password is required'),
-  confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], "Password does not match"),
+  confirmPassword: Yup.string().oneOf(
+    [Yup.ref('password'), null],
+    'Password does not match'
+  ),
   nationality: Yup.string().required('Select a nationality'),
   gender: Yup.string().required('Select a gender'),
   term: Yup.string().required('Required'),
@@ -198,18 +196,17 @@ function Form2(props) {
     event.preventDefault();
   };
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     if (props.auth.isAuthenticated) {
-      props.history.push("/learn");
+      props.history.push('/learn');
     }
-  }
-  )
+  });
 
-//  componentWillReceiveProps(nextProps) {
-//     if (nextProps.errors) {
-//       setValues({ ...values, errors: nextProps.errors });
-//     }
-//   }
+  //  componentWillReceiveProps(nextProps) {
+  //     if (nextProps.errors) {
+  //       setValues({ ...values, errors: nextProps.errors });
+  //     }
+  //   }
 
   const submitForm = (data) => {};
   return (
@@ -233,248 +230,237 @@ function Form2(props) {
             }
             console.log(values);
             console.log(props);
-            props.registerUser(values, props.history)
+            props.registerUser(values, props.history);
           }}
         >
+          {/* {props.errors.message ? (
+            <span style={{ color: 'red' }}>{props.errors.message}</span>
+          ) : null} */}
           {/* {props.errors.message} */}
           <ThemeProvider theme={theme}>
             {/* <div className="row"> */}
-              {/* <div className="col-md-6"> */}
-                <CssTextField
-                  // style={{ width: '0%' }}
-                  className={classes.margin}
-                  id="inputFirstName"
-                  label="First Name"
-                  name="firstname"
-                  // ref={register}
-                  variant="filled"
-                  onChange={handleChange('firstname')}
-                  value={values.firstname}
-                />
-                <br />
-                {errors.firstname && touched.firstname ? (
-                  <span style={{ color: 'red' }}>
-                    {errors.firstname}
-                  </span>
-                ) : null}{' '}
-                {/* <p>{errors.firstname?.message}</p> */}
-              {/* </div> */}
-
-              {/* <div className="col-md-6"> */}
-                <CssTextField
-                  className={classes.margin}
-                  id="inputLastName"
-                  label="Last Name"
-                  name="lastname"
-                  // ref={register}
-                  variant="filled"
-                  onChange={handleChange('lastname')}
-                  value={values.lastname}
-                  // style={{ width: '50%' }}
-                />
-                <br />
-                {errors.lastname && touched.lastname ? (
-                  <span style={{ color: 'red'}}>
-                    {errors.lastname}
-                  </span>
-                ) : null}
-              {/* </div> */}
+            {/* <div className="col-md-6"> */}
+            <CssTextField
+              // style={{ width: '0%' }}
+              className={classes.margin}
+              id="inputFirstName"
+              label="First Name"
+              name="firstname"
+              // ref={register}
+              variant="filled"
+              onChange={handleChange('firstname')}
+              value={values.firstname}
+            />
+            <br />
+            {errors.firstname && touched.firstname ? (
+              <span style={{ color: 'red' }}>{errors.firstname}</span>
+            ) : null}{' '}
+            {/* <p>{errors.firstname?.message}</p> */}
             {/* </div> */}
-
+            {/* <div className="col-md-6"> */}
+            <CssTextField
+              className={classes.margin}
+              id="inputLastName"
+              label="Last Name"
+              name="lastname"
+              // ref={register}
+              variant="filled"
+              onChange={handleChange('lastname')}
+              value={values.lastname}
+              // style={{ width: '50%' }}
+            />
+            <br />
+            {errors.lastname && touched.lastname ? (
+              <span style={{ color: 'red' }}>{errors.lastname}</span>
+            ) : null}
+            {/* </div> */}
+            {/* </div> */}
             {/* <div className="row"> */}
-              {/* <div className="col-md-6"> */}
-                <CssTextField
-                  className={classes.margin}
-                  autoComplete="username"
-                  id="inputUsername"
-                  label="Username"
-                  name="username"
-                  // ref={register}
-                  variant="filled"
-                  // style={{ width: '47%' }}
-                  onChange={handleChange('username')}
-                  value={values.username}
-                />
-                <br />
-                {errors.username && touched.username ? (
-                  <span style={{ color: 'red' }}>
-                    {errors.username}
-                  </span>
-                ) : null}
-              {/* </div> */}
-              {/* <div className="col-md-6"> */}
-                <CssTextField
-                  className={classes.margin}
-                  id="inputEmail"
-                  label="Email"
-                  name="email"
-                  // ref={register}
-                  variant="filled"
-                  type="email"
-                  // style={{ width: '47%' }}
-                  onChange={handleChange('email')}
-                  value={values.email}
-                />
-                <br />
-                {errors.email && touched.email ? (
-                  <span style={{ color: 'red'}}>
-                    {errors.email}
-                  </span>
-                ) : null}
-              {/* </div> */}
+            {/* <div className="col-md-6"> */}
+            <CssTextField
+              className={classes.margin}
+              autoComplete="username"
+              id="inputUsername"
+              label="Username"
+              name="username"
+              // ref={register}
+              variant="filled"
+              // style={{ width: '47%' }}
+              onChange={handleChange('username')}
+              value={values.username}
+            />
+            <br />
+            {errors.username && touched.username ? (
+              <span style={{ color: 'red' }}>{errors.username}</span>
+            ) : null}
             {/* </div> */}
-
+            {/* <div className="col-md-6"> */}
+            <CssTextField
+              className={classes.margin}
+              id="inputEmail"
+              label="Email"
+              name="email"
+              // ref={register}
+              variant="filled"
+              type="email"
+              // style={{ width: '47%' }}
+              onChange={handleChange('email')}
+              value={values.email}
+            />
+            <br />
+            {errors.email && touched.email ? (
+              <span style={{ color: 'red' }}>{errors.email}</span>
+            ) : null}
+            {/* </div> */}
+            {/* </div> */}
             {/* <div className="row w-70"> */}
-              {/* <div className="col-md-6"> */}
-                <CssTextField
-                  className={classes.margin}
-                  id="inputPhoneNumber"
-                  label="Phone Number"
-                  variant="filled"
-                  name="number"
-                  // ref={register}
-                  type="tel"
-                  style={{ width: '47%' }}
-                  onChange={handleChange('phonenumber')}
-                  value={values.phonenumber}
-                />
-                <br />
-                {errors.phonenumber && touched.phonenumber ? (
-                  <span style={{ color: 'red' }}>
-                    {errors.phonenumber}
-                  </span>
-                ) : null}
-              {/* </div> */}
-              {/* <div className="col-md-6"> */}
-                <FormControl
-                  className={clsx(classes.margin, classes.textField)}
-                  style={{ backgroundColor: 'rgba(0, 0, 0, 0.10)', width: '47%',padding: "5px 0px 0px 15px", borderRadius: "5px 5px 0px 0px" }}
-                  id="inputPassword"
-                  label="filled"
-                  variant="filled"
-                >
-                  <InputLabel
-                    htmlFor="password"
-                    style={{ margin: '-3px 0px 40px 0px' }}
-                  >
-                    Password
-                  </InputLabel>
-                  <Input
-                    autoComplete="new-password"
-                    id="password"
-                    type={values.showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    name="password"
-                    // ref={register}
-                    // style={{ }}
-                    onChange={handleChange('password')}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {values.showPassword ? (
-                            <Visibility />
-                          ) : (
-                            <VisibilityOff />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
-                <br />
-                {errors.password && touched.phonenumber ? (
-                  <span style={{ color: 'red' }}>
-                    {errors.password}
-                  </span>
-                ) : null}
-              {/* </div> */}
+            {/* <div className="col-md-6"> */}
+            <CssTextField
+              className={classes.margin}
+              id="inputPhoneNumber"
+              label="Phone Number"
+              variant="filled"
+              name="number"
+              // ref={register}
+              type="tel"
+              style={{ width: '47%' }}
+              onChange={handleChange('phonenumber')}
+              value={values.phonenumber}
+            />
+            <br />
+            {errors.phonenumber && touched.phonenumber ? (
+              <span style={{ color: 'red' }}>{errors.phonenumber}</span>
+            ) : null}
             {/* </div> */}
-
+            {/* <div className="col-md-6"> */}
+            <FormControl
+              className={clsx(classes.margin, classes.textField)}
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.10)',
+                width: '47%',
+                padding: '5px 0px 0px 15px',
+                borderRadius: '5px 5px 0px 0px',
+              }}
+              id="inputPassword"
+              label="filled"
+              variant="filled"
+            >
+              <InputLabel
+                htmlFor="password"
+                style={{ margin: '-3px 0px 40px 0px' }}
+              >
+                Password
+              </InputLabel>
+              <Input
+                autoComplete="new-password"
+                id="password"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                name="password"
+                // ref={register}
+                // style={{ }}
+                onChange={handleChange('password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <br />
+            {errors.password && touched.phonenumber ? (
+              <span style={{ color: 'red' }}>{errors.password}</span>
+            ) : null}
+            {/* </div> */}
+            {/* </div> */}
             {/* <div className="row"> */}
-              {/* <div className="col-md-6"> */}
-                <FormControl
-                  className={clsx(classes.margin, classes.textField)}
-                  style={{ backgroundColor: 'rgba(0, 0, 0, 0.10)', width: '47%', padding: "5px 0px 0px 15px", borderRadius: "5px 5px 0px 0px" }}
-                  id="inputConfirmPassword"
-                  label="filled"
-                  variant="filled"
-                >
-                  <InputLabel
-                    htmlFor="confirmPassword"
-                    style={{ margin: '-3px 0px 40px 0px' }}
-                  >
-                    Confirm Password
-                  </InputLabel>
-                  <Input
-                    id="confirmPassword"
-                    autoComplete="password"
-                    type={values.showConfirmPassword ? 'text' : 'password'}
-                    value={values.confirmPassword}
-                    name="confirmPassword"
-                    // ref={register}
-                    // style={{  }}
-                    onChange={handleChange('confirmPassword')}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowConfirmPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {values.showConfirmPassword ? (
-                            <Visibility />
-                          ) : (
-                            <VisibilityOff />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
-                <br />
-                {errors.confirmPassword && touched.confirmPassword ? (
-                  <span style={{ color: 'red' }}>
-                    {errors.confirmPassword}
-                  </span>
-                ) : null}
-              {/* </div> */}
-              {/* <div className="col-md-6"> */}
-                <FormControl
-                  variant="filled"
-                  className={classes.formControl}
-                  style={{ width: '47%', marginLeft: '9px', marginTop: '8px' }}
-                >
-                  <InputLabel htmlFor="filled-age-native-simple">
-                    Nationality
-                  </InputLabel>
-                  <Select
-                    native
-                    value={values.nationality}
-                    name="nationality"
-                    // ref={register}
-                    onChange={handleChange('nationality')}
-                    inputProps={{
-                      name: 'nationality',
-                      id: 'filled-age-native-simple',
-                    }}
-                  >
-                    <option aria-label="None" value="" />
-                    <option value={'african'}>African</option>
-                    <option value={'asian'}>Asian</option>
-                    <option value={'ameriacan'}>American</option>
-                  </Select>
-                </FormControl>
-                <br />
-                {errors.nationality && touched.phonenumber ? (
-                  <span style={{ color: 'red' }}>
-                    {errors.nationality}
-                  </span>
-                ) : null}
-              {/* </div> */}
+            {/* <div className="col-md-6"> */}
+            <FormControl
+              className={clsx(classes.margin, classes.textField)}
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.10)',
+                width: '47%',
+                padding: '5px 0px 0px 15px',
+                borderRadius: '5px 5px 0px 0px',
+              }}
+              id="inputConfirmPassword"
+              label="filled"
+              variant="filled"
+            >
+              <InputLabel
+                htmlFor="confirmPassword"
+                style={{ margin: '-3px 0px 40px 0px' }}
+              >
+                Confirm Password
+              </InputLabel>
+              <Input
+                id="confirmPassword"
+                autoComplete="password"
+                type={values.showConfirmPassword ? 'text' : 'password'}
+                value={values.confirmPassword}
+                name="confirmPassword"
+                // ref={register}
+                // style={{  }}
+                onChange={handleChange('confirmPassword')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowConfirmPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showConfirmPassword ? (
+                        <Visibility />
+                      ) : (
+                        <VisibilityOff />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <br />
+            {errors.confirmPassword && touched.confirmPassword ? (
+              <span style={{ color: 'red' }}>{errors.confirmPassword}</span>
+            ) : null}
+            {/* </div> */}
+            {/* <div className="col-md-6"> */}
+            <FormControl
+              variant="filled"
+              className={classes.formControl}
+              style={{ width: '47%', marginLeft: '9px', marginTop: '8px' }}
+            >
+              <InputLabel htmlFor="filled-age-native-simple">
+                Nationality
+              </InputLabel>
+              <Select
+                native
+                value={values.nationality}
+                name="nationality"
+                // ref={register}
+                onChange={handleChange('nationality')}
+                inputProps={{
+                  name: 'nationality',
+                  id: 'filled-age-native-simple',
+                }}
+              >
+                <option aria-label="None" value="" />
+                <option value={'african'}>African</option>
+                <option value={'asian'}>Asian</option>
+                <option value={'ameriacan'}>American</option>
+              </Select>
+            </FormControl>
+            <br />
+            {errors.nationality && touched.phonenumber ? (
+              <span style={{ color: 'red' }}>{errors.nationality}</span>
+            ) : null}
+            {/* </div> */}
             {/* </div> */}
             <FormControl
               component="fieldset"
@@ -511,11 +497,8 @@ function Form2(props) {
               </RadioGroup>
             </FormControl>
             {/* <br /> */}
-
             {errors.nationality && errors.touched ? (
-              <span style={{ color: 'red'}}>
-                {errors.gender}
-              </span>
+              <span style={{ color: 'red' }}>{errors.gender}</span>
             ) : null}
             {/* <br /> */}
             <div style={{ width: '100%' }}>
@@ -531,7 +514,6 @@ function Form2(props) {
                 I agree with the terms and conditions
               </span>
             </div>
-
             <div style={{ display: 'block', width: '100%' }}>
               <button
                 type="submit"
@@ -548,17 +530,13 @@ function Form2(props) {
   );
 }
 
-
 Form2.propTypes = {
   registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
 });
 
-export default connect(
-  mapStateToProps,
-  { registerUser }
-)(withRouter(Form2));
+export default connect(mapStateToProps, { registerUser })(withRouter(Form2));

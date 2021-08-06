@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -21,10 +21,10 @@ import {
 import TextField from '@material-ui/core/TextField';
 import { green } from '@material-ui/core/colors';
 
-import {loginUser} from "../../Actions/authActions"
+import { loginUser } from '../../Actions/authActions';
 import PropTypes from 'prop-types';
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 const CssTextField = withStyles({
   root: {
@@ -118,8 +118,10 @@ function Login(props) {
     email: '',
     password: '',
     showPassword: false,
-    errors: ''
+    errors: '',
   });
+
+  console.log(props);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value }); //
@@ -134,12 +136,12 @@ function Login(props) {
   };
   // const submitForm = (data) => {};
 
-  React.useEffect(()=>{
-    if(props.auth.isAuthenticated){
-      console.log(props)
-      props.history.push('/learn')
+  React.useEffect(() => {
+    if (props.auth.isAuthenticated) {
+      // console.log(props)
+      props.history.push('/posts');
     }
-  })
+  });
   // console.log(this.props)
 
   // React.useEffect((nextProps)=> {
@@ -174,15 +176,21 @@ function Login(props) {
               handleSubmit(values);
             }
             console.log(values);
-            props.loginUser(values)
+            props.loginUser(values);
           }}
         >
           <div>
-            {errors.email && touched.email ? (
+            {(errors.email && touched.email) || props.auth.user === null ? (
               <span style={{ color: 'red', textAlign: 'center' }}>
                 Invalid Details ❌❌
               </span>
-            ) : null}{' '}
+            ) : null}
+            {/* {!props.auth.isAuthenticated ? (
+            <span style={{ color: 'red' }}>{props.errors.response.data.messasge}</span>
+          ) : null} */}
+            <span style={{ color: 'red', textAlign: 'center' }}>
+              {props.errors.response?.data.message}
+            </span>
           </div>
           {/* <p>{errors.password?.message}</p> */}
           <ThemeProvider theme={theme}>
@@ -194,17 +202,22 @@ function Login(props) {
               variant="filled"
               onChange={handleChange}
               value={values.email}
-              style={{ width: '47%'}}
+              style={{ width: '47%' }}
             />
 
             <div></div>
             {/* <p>{errors.email?.message}</p> */}
             <FormControl
               className={clsx(classes.margin, classes.textField)}
-              style={{  backgroundColor: 'rgba(0, 0, 0, 0.10)', width: '47%',padding: "5px 0px 0px 15px", borderRadius: "5px 5px 0px 0px"  }}
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.10)',
+                width: '47%',
+                padding: '5px 0px 0px 15px',
+                borderRadius: '5px 5px 0px 0px',
+              }}
               id="inputPassword"
               label="filled"
-                  variant="filled"
+              variant="filled"
             >
               <InputLabel
                 htmlFor="password"
@@ -274,17 +287,13 @@ function Login(props) {
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
 });
 
-let RouterLogin = withRouter(Login)
+let RouterLogin = withRouter(Login);
 
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(RouterLogin);
-
+export default connect(mapStateToProps, { loginUser })(RouterLogin);

@@ -4,9 +4,14 @@ import PostItem from './postItem';
 
 class PostFeed extends Component {
   render() { 
-    const { posts } = this.props;
+    const { message } = this.props.posts;
     console.log(this.props)
-    return posts.map((post) => <PostItem key={post._id} post={post} />);
+    if(message){
+      return message.map((post) => <PostItem key={post._id} post={post} />)
+    }else{
+      return <p>whatsssss</p>
+    }
+    ;
   }
 }
 

@@ -26,6 +26,9 @@
 .makeStyles-list-15 {
   margin-top: 3rem !important;
 }
+.MuiTypography-displayBlock {
+  color: black !important;
+}
 
 @media only screen and (min-width: 280px) and (max-width: 290px) {
   .main-div {
