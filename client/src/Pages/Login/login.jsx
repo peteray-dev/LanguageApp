@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -23,7 +23,9 @@ import { green } from '@material-ui/core/colors';
 
 import { loginUser } from '../../Actions/authActions';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { withRouter } from 'react-router-dom';
 
 const CssTextField = withStyles({
@@ -114,35 +116,29 @@ const LoginValidationSchema = Yup.object({
 function Login(props) {
   const classes = useStyles();
 
-  const [values, setValues] = React.useState({
-    email: '',
-    password: '',
-    showPassword: false,
-    errors: '',
-  });
-
-  console.log(props);
-
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value }); //
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setshowPassword] = useState(false);
+  const [err, setErr] = useState(null);
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setshowPassword(!showPassword);
   };
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const dispatch = useDispatch();
+  const logUser = bindActionCreators(loginUser, dispatch);
+  const state = useSelector((state) => state.auth);
+
   // const submitForm = (data) => {};
 
-  React.useEffect(() => {
-    if (props.auth.isAuthenticated) {
-      // console.log(props)
-      props.history.push('/posts');
-    }
-  });
-  // console.log(this.props)
+  // React.useEffect(() => {
+  //   if (props.auth.isAuthenticated) {
+  //     props.history.push('/posts');
+  //   }
+  // });
 
   // React.useEffect((nextProps)=> {
   //   if (nextProps.auth.isAuthenticated) {
@@ -155,13 +151,14 @@ function Login(props) {
   // const submitForm = (data) => {};
   return (
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email, password }}
       validationSchema={LoginValidationSchema}
-      // onSubmit={(values) => {
-      //   values.preventDefault();
-      //   e.preventDefault()
-      //   console.log(values);
-      // }}
+      onSubmit={(values) => {
+        logUser(values);
+        if (state.user?.status) {
+          return props.history.push('/');
+        }
+      }}
       // onSubmit={(e)=>{
       //   e.preventDefault()
       // }}
@@ -172,25 +169,25 @@ function Login(props) {
 
           onSubmit={(e) => {
             e.preventDefault();
-            {
-              handleSubmit(values);
-            }
-            console.log(values);
-            props.loginUser(values);
+            handleSubmit(values);
+            // {
+            //   handleSubmit(values);
+            // }
+            // props.loginUser(values);
           }}
         >
           <div>
-            {(errors.email && touched.email) || props.auth.user === null ? (
+            {/* {(errors.email && touched.email) || props.auth.user === null ? (
               <span style={{ color: 'red', textAlign: 'center' }}>
                 Invalid Details ❌❌
               </span>
-            ) : null}
+            ) : null} */}
             {/* {!props.auth.isAuthenticated ? (
             <span style={{ color: 'red' }}>{props.errors.response.data.messasge}</span>
           ) : null} */}
-            <span style={{ color: 'red', textAlign: 'center' }}>
+            {/* <span style={{ color: 'red', textAlign: 'center' }}>
               {props.errors.response?.data.message}
-            </span>
+            </span> */}
           </div>
           {/* <p>{errors.password?.message}</p> */}
           <ThemeProvider theme={theme}>
@@ -284,16 +281,16 @@ function Login(props) {
   );
 }
 
-Login.propTypes = {
-  loginUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-};
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  errors: state.errors,
-});
+// Login.propTypes = {
+//   loginUser: PropTypes.func.isRequired,
+//   auth: PropTypes.object.isRequired,
+//   errors: PropTypes.object.isRequired,
+// };
+// const mapStateToProps = (state) => ({
+//   auth: state.auth,
+//   errors: state.errors,
+// });
 
 let RouterLogin = withRouter(Login);
 
-export default connect(mapStateToProps, { loginUser })(RouterLogin);
+export default RouterLogin;

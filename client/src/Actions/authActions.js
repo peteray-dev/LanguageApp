@@ -2,59 +2,97 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
-import { GET_CURRENT_USER, GET_ERRORS, SET_CURRENT_USER } from './types';
+import {
+  GET_CURRENT_USER,
+  GET_ERRORS,
+  SET_CURRENT_USER,
+  LOGIN,
+  LOGOUT,
+  GET_LOGIN_ERR,
+  GET_USER_PROFILE,
+  GET_USER_PROFILE_ERR,
+} from './types';
 
 //Register User
 export const registerUser = (userData, history) => (dispatch) => {
   axios
     .post('http://localhost:4000/api/user/register', userData)
-    .then((res) => history.push('/login'))
-    .catch((err) =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .then(({ data }) => {
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ ...data?.message, token: data.token })
+      );
+      return dispatch({
+        type: LOGIN,
+        payload: { status: data.status, ...data.message },
+      });
+    })
+    .catch(({ response }) => {
+      return dispatch({
+        type: GET_LOGIN_ERR,
+        payload: response?.data,
+      });
+    });
 };
 
 //Login - get user token
 export const loginUser = (userData) => (dispatch) => {
   axios
     .post('http://localhost:4000/api/user/login', userData)
-    .then((res) => {
-      //save to localStorage
-      const { token } = res.data;
-      console.log(res);
-
+    .then(({ data }) => {
       localStorage.setItem(
         'user',
-        JSON.stringify({ ...res.data.message, token })
+        JSON.stringify({ ...data?.message, token: data.token })
       );
-
-      //set token to local storage
-      // localStorage.setItem('jwtToken', token);
-
-      //set token to auth header
-      setAuthToken(token);
-
-      // //decode token to get user data
-      // const decoded = jwt_decode(token);
-
-      // console.log(decoded);
-      // //set current user
-      dispatch(setCurrentUser({ ...res.data.message, token }));
+      return dispatch({
+        type: LOGIN,
+        payload: { status: data.status, ...data.message },
+      });
     })
-    .catch((err) =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err,
-      })
-    );
+    .catch(({ response }) => {
+      return dispatch({
+        type: GET_LOGIN_ERR,
+        payload: response?.data,
+      });
+    });
 };
-
-export const currentUserSubject = new BehaviorSubject(
-  JSON.parse(localStorage.getItem('user'))
-);
+export const getUserProfile = () => (dispatch) => {
+  let loggedInUser = JSON.parse(localStorage.getItem('user'));
+  if (loggedInUser) {
+    axios
+      .get('http://localhost:4000/api/user/profile', {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem('user')).token
+          }`,
+        },
+      })
+      .then(({ data }) => {
+        return dispatch({
+          type: GET_USER_PROFILE,
+          payload: data?.data,
+        });
+      })
+      .catch(({ response }) => {
+        return dispatch({
+          type: GET_USER_PROFILE_ERR,
+          payload: response?.data,
+        });
+      });
+  } else {
+    return undefined;
+  }
+};
+export const logout = () => (dispatch) => {
+  let loggedInUser = JSON.parse(localStorage.getItem('user'));
+  if (loggedInUser) {
+    localStorage.clear('user');
+    return dispatch({
+      type: LOGOUT,
+      payload: null,
+    });
+  }
+};
 
 // export const setCurrentUser = (decoded) => {
 //   return {
@@ -63,21 +101,21 @@ export const currentUserSubject = new BehaviorSubject(
 //   };
 // };
 
-export const logoutUser = () => (dispatch) => {
-  //remove token from the localstorage
-  localStorage.removeItem('user');
-  currentUserSubject.next(null);
+// export const logoutUser = () => (dispatch) => {
+//   //remove token from the localstorage
+//   localStorage.removeItem('user');
+//   currentUserSubject.next(null);
 
-  //remove auth header
-  setAuthToken(false);
+//   //remove auth header
+//   setAuthToken(false);
 
-  //set current user to empty object
-  dispatch({});
-};
+//   //set current user to empty object
+//   dispatch({});
+// };
 
-export function currentUserValue() {
-  dispatch({
-    type: GET_CURRENT_USER,
-    payload: currentUserSubject.value,
-  });
-}
+// export function currentUserValue() {
+//   dispatch({
+//     type: GET_CURRENT_USER,
+//     payload: currentUserSubject.value,
+//   });
+// }

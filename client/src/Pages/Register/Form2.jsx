@@ -1,3 +1,7 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { green } from '@material-ui/core/colors';
 import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,16 +19,9 @@ import TextField from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
-import React from 'react';
-// import {yu} from 'formik';
 import * as Yup from 'yup';
-// import {required} from 'yup'
-// import { useForm } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 import { registerUser } from '../../Actions/authActions';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -64,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: 'transparent',
     },
   },
+
   margin: {
     margin: theme.spacing(1),
     // width: '70%'
@@ -142,10 +140,6 @@ const schema = Yup.object().shape({
   term: Yup.string().required('Required'),
 });
 function Form2(props) {
-  // const { register, handleSubmit, errors } = useForm({
-  //   resolver: yupResolver(schema),
-  // });
-
   function StyledRadio(props) {
     const classes = useStyles();
 
@@ -164,43 +158,37 @@ function Form2(props) {
   }
   const classes = useStyles();
 
-  const [values, setValues] = React.useState({
-    firstname: '',
-    lastname: '',
-    username: '',
-    email: '',
-    gender: '',
-    phonenumber: '',
-    password: '',
-    confirmPassword: '',
-    nationality: '',
-    showPassword: false,
-    showConfirmPassword: false,
-    term: true,
-    errors: {},
-  });
-
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value }); //
-  };
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setemail] = useState('');
+  const [gender, setGender] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [nationality, setNationality] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errors, setErrors] = useState(null);
+  const [term, setTerm] = useState(true);
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setShowPassword(!showPassword);
   };
 
   const handleClickShowConfirmPassword = () => {
-    setValues({ ...values, showConfirmPassword: !values.showConfirmPassword });
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  React.useEffect(() => {
-    if (props.auth.isAuthenticated) {
-      props.history.push('/learn');
-    }
-  });
+  // React.useEffect(() => {
+  //   if (props.auth.isAuthenticated) {
+  //     props.history.push('/learn');
+  //   }
+  // });
 
   //  componentWillReceiveProps(nextProps) {
   //     if (nextProps.errors) {
@@ -209,14 +197,27 @@ function Form2(props) {
   //   }
 
   const submitForm = (data) => {};
+  let values = {
+    firstname,
+    lastname,
+    password,
+    username,
+    confirmPassword,
+    password,
+  };
   return (
     <Formik
       initialValues={values}
       validationSchema={schema}
       onSubmit={(values) => {
         // values.preventDefault();
-        // e.preventDefault();
-        // console.log(values);
+        axios
+          .post('http://localhost:4000/api/user/register', values)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err.response));
+        console.log(values);
       }}
     >
       {({ handleSubmit, handleChange, values, errors, touched }) => (
@@ -225,12 +226,12 @@ function Form2(props) {
           // noValidate
           onSubmit={(e) => {
             e.preventDefault();
-            {
-              handleSubmit(submitForm);
-            }
-            console.log(values);
-            console.log(props);
-            props.registerUser(values, props.history);
+            axios
+              .post('http://localhost:4000/api/user/register', values)
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => console.log(err.response));
           }}
         >
           {/* {props.errors.message ? (
@@ -354,7 +355,7 @@ function Form2(props) {
               <Input
                 autoComplete="new-password"
                 id="password"
-                type={values.showPassword ? 'text' : 'password'}
+                type={showPassword ? 'word' : 'password'}
                 value={values.password}
                 name="password"
                 // ref={register}
@@ -367,7 +368,7 @@ function Form2(props) {
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -402,7 +403,7 @@ function Form2(props) {
               <Input
                 id="confirmPassword"
                 autoComplete="password"
-                type={values.showConfirmPassword ? 'text' : 'password'}
+                type={showConfirmPassword ? 'word' : 'password'}
                 value={values.confirmPassword}
                 name="confirmPassword"
                 // ref={register}
@@ -415,11 +416,7 @@ function Form2(props) {
                       onClick={handleClickShowConfirmPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {values.showConfirmPassword ? (
-                        <Visibility />
-                      ) : (
-                        <VisibilityOff />
-                      )}
+                      {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 }
