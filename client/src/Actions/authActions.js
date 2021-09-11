@@ -56,12 +56,12 @@ export const currentUserSubject = new BehaviorSubject(
   JSON.parse(localStorage.getItem('user'))
 );
 
-// export const setCurrentUser = (decoded) => {
-//   return {
-//     type: SET_CURRENT_USER,
-//     payload: currentUserSubject.asObservable(),
-//   };
-// };
+export const setCurrentUser = (decoded) => {
+  return {
+    type: SET_CURRENT_USER,
+    payload: currentUserSubject.asObservable(),
+  };
+};
 
 export const logoutUser = () => (dispatch) => {
   //remove token from the localstorage
@@ -75,9 +75,9 @@ export const logoutUser = () => (dispatch) => {
   dispatch({});
 };
 
-export function currentUserValue() {
-  dispatch({
-    type: GET_CURRENT_USER,
-    payload: currentUserSubject.value,
-  });
-}
+// export function currentUserValue() {
+//   dispatch({
+//     type: GET_CURRENT_USER,
+//     payload: currentUserSubject.value,
+//   });
+// }

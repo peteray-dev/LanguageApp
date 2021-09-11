@@ -29,7 +29,7 @@ class PostForm extends Component {
     e.preventDefault();
     console.log(this.props)
     // const { user } = this.props.auth;
-    const user = localStorage.getItem('user')
+    const user =JSON.parse(localStorage.getItem('user')) 
     const newPost = {
       text: this.state.text,
       name: user.firstname,
