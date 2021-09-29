@@ -1,21 +1,31 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navbar, NavDropdown, Nav, Row, Container, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './Landing.css';
 import img1 from '../../Assets/images/cultural_all2.jpg';
 import LearnFront from './LearnFront';
 
-const NavFront = () => {
+import { logout } from '../../Actions/authActions';
+import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+const NavFront = ({ isAuth }) => {
+  const state = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const userLogout = bindActionCreators(logout, dispatch);
+  useEffect(() => {}, [state.isAuthenticated]);
   return (
     <>
-    <Container>
-         <Navbar
+      <Container>
+        <Navbar
           collapseOnSelect
           expand="lg"
-          className="header-area sticky fixed-top" 
-          style={{ backgroundColor: '#e6f9f5', paddingTop: "20px" }}
+          className="header-area sticky fixed-top"
+          style={{ backgroundColor: '#e6f9f5', paddingTop: '20px' }}
         >
-            <Navbar.Brand href="#home" className="home-logo">HISPEEK</Navbar.Brand>
+          <Navbar.Brand href="#home" className="home-logo">
+            HISPEEK
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse
             id="responsive-navbar-nav"
@@ -39,35 +49,39 @@ const NavFront = () => {
                   Meet Our Team
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link href="/contact">Contact</Nav.Link>
+              <Nav.Link as={Link} href="/contact">
+                Contact
+              </Nav.Link>
             </Nav>
 
-            <Nav >
+            <Nav>
               <li className="button-header">
-                <a href="/login" className="header-btn mb-1  ">
-                  {' '}
-                  Login
-                </a>
-                <a href="/register" className="header-btn ">
-                  {' '}
-                  Register
-                </a>
+                {!isAuth ? (
+                  <>
+                    <Link to="/login" className="header-btn mb-1  ">
+                      Login
+                    </Link>
+                    <Link to="/register" className="header-btn ">
+                      Register
+                    </Link>
+                  </>
+                ) : (
+                  <Link onClick={() => userLogout} className="header-btn ">
+                    Logout
+                  </Link>
+                )}
               </li>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav" style={{ zIndex: '2' }}></Navbar.Collapse>
-   
-    </Container>
-   
+        <Navbar.Collapse
+          id="responsive-navbar-nav"
+          style={{ zIndex: '2' }}
+        ></Navbar.Collapse>
+      </Container>
     </>
-  )
-}
+  );
+};
 export default NavFront;
-
-
-
-
-
