@@ -233,9 +233,11 @@ function Form2(props) {
               })
               .catch((err) => console.log(err.response));
           }}
+          
         >
-          {/* {props.errors.message ? (
-            <span style={{ color: 'red' }}>{props.errors.message}</span>
+          {/* {console.log(props)} */}
+          {/* {errors.message ? (
+            <span style={{ color: 'red' }}>{errors.message}</span>
           ) : null} */}
           {/* {props.errors.message} */}
           <ThemeProvider theme={theme}>

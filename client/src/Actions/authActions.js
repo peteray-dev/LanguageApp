@@ -80,7 +80,7 @@ export const getUserProfile = () => (dispatch) => {
         });
       });
   } else {
-    return undefined;
+    return undefined; //change to be as the same to line 76
   }
 };
 export const logout = () => (dispatch) => {
@@ -94,12 +94,12 @@ export const logout = () => (dispatch) => {
   }
 };
 
-export const setCurrentUser = (decoded) => {
-  return {
-    type: SET_CURRENT_USER,
-    payload: currentUserSubject.asObservable(),
-  };
-};
+// export const setCurrentUser = (decoded) => {
+//   return {
+//     type: SET_CURRENT_USER,
+//     payload: currentUserSubject.asObservable(),
+//   };
+// };
 
 // export const logoutUser = () => (dispatch) => {
 //   //remove token from the localstorage

@@ -156,7 +156,7 @@ function Login(props) {
       onSubmit={(values) => {
         logUser(values);
         if (state.user?.status) {
-          return props.history.push('/');
+          return props.history.push('/learn');
         }
       }}
       // onSubmit={(e)=>{

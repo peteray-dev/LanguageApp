@@ -17,7 +17,7 @@ import ContactForm from './Pages/Contact/ContactForm';
 import Team from './Pages/Team/team';
 import Feed from './Pages/Community/Feed';
 import Posts from './Pages/Posts/posts';
-import { PrivateRoute } from './Components/PrivateRoute';
+import { PrivateRoute } from './PrivateRoute';
 import { getUserProfile } from './Actions/authActions';
 import { bindActionCreators } from 'redux';
 

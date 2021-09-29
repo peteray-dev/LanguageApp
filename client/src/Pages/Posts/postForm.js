@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import TextAreaFieldGroup from '../../common/TextAreaFieldGroup';
 import { addPost } from '../../Actions/postActions';
 // import { propTypes } from 'react-bootstrap/esm/Image'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 
 class PostForm extends Component {
   constructor(props) {
@@ -17,13 +20,15 @@ class PostForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.errors) {
-      this.setState({
-        errors: newProps.errors,
-      });
-    }
-  }
+  // componentWillReceiveProps(newProps) {
+  //   if (newProps.errors) {
+  //     this.setState({
+  //       errors: newProps.errors,
+  //     });
+  //   }
+  // }
+
+  
 
   onSubmit(e) {
     e.preventDefault();
@@ -51,6 +56,9 @@ console.log(user)
 
   render() {
     const { errors } = this.state;
+  //   const dispatch = useDispatch()
+  // const addOnePost = bindActionCreators(addPost, dispatch)
+  // const state = useSelector((state) => state.auth)
     return (
       <>
         <div className="post-form mb-3">
@@ -95,3 +103,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { addPost })(PostForm);
+
+// let RouterPostForm = withRouter(PostForm);
+
+// export default RouterPostForm;
